@@ -8,7 +8,6 @@ Created on Fri May  3 19:01:53 2019
 
 # train on computer
 
-from gym import spaces
 import pandas as pd
 import numpy as np
 from keras.models import Sequential, Model
@@ -496,7 +495,7 @@ if __name__ == '__main__':
   # record profit
   record = []
   
-  df = pd.read_csv('/Users/chenlimin/Desktop/GU course/term2/reinforcement learning/project/trading bot/official_code/new/data/only_return.csv')
+  df = pd.read_csv('only_return.csv')
   init_amount = 0.0001
   env = StockTradingEnv(df,init_amount)
 
@@ -512,7 +511,7 @@ if __name__ == '__main__':
   
   # load weights
   if load == True:
-    public = '/Users/chenlimin/Desktop/GU course/term2/reinforcement learning/project/trading bot/official_code/new/weight/'
+    public = ''
     actor.main_actor_nn.load_weights(public+'actor_weight.h5')
     actor.target_actor_nn.load_weights(public+'actor_weight.h5')
     critic.main_critic_nn.load_weights(public+'critic_weight.h5')
@@ -525,7 +524,7 @@ if __name__ == '__main__':
   # sample_size 多一点，不然 默认32的batch_size 没有意义
   sample_size = 640
 
-  general_train = 500
+  general_train = 70000
 
   for i in range(general_train):
 
@@ -535,7 +534,7 @@ if __name__ == '__main__':
       # extract from memory and batchly train
       experience_replay(sample_size)
       
-      if i%50 == 0:
+      if i%500 == 0:
         # save model
         #actor.save_model('actor_0.h5')
         #critic.save_model('critic_0.h5')
