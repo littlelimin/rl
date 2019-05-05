@@ -471,7 +471,7 @@ def experience_replay(sample_size):
     
     
     # train critic main NN
-    critic.main_critic_nn.fit([batch_market,batch_account,batch_action],Q_label,epochs = 30, verbose=0)
+    critic.main_critic_nn.fit([batch_market,batch_account,batch_action],Q_label,epochs = 50, verbose=0)
     
     # batch_action = actor.model.predict([input_states,value_states]) 不需要了吧，直接memory记住action就行了吧
     with tf.Session() as sess:
