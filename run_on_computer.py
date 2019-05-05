@@ -471,7 +471,7 @@ def experience_replay(sample_size):
     
     
     # train critic main NN
-    critic.main_critic_nn.fit([batch_market,batch_account,batch_action],Q_label,epochs = 3)
+    critic.main_critic_nn.fit([batch_market,batch_account,batch_action],Q_label,epochs = 30, verbose=0)
     
     # batch_action = actor.model.predict([input_states,value_states]) 不需要了吧，直接memory记住action就行了吧
     with tf.Session() as sess:
@@ -524,7 +524,7 @@ if __name__ == '__main__':
   # sample_size 多一点，不然 默认32的batch_size 没有意义
   sample_size = 640
 
-  general_train = 70000
+  general_train = 3000
 
   for i in range(general_train):
 
@@ -547,10 +547,11 @@ if __name__ == '__main__':
       # record = profit growing history
       record.append(profit)
       
-      # save the reward_record through [[ pickle ]]
-      file = open("reward_record.pickle","wb")
-      pickle.dump(record,file)
-      file.close()
+      if i%100 == 0:
+        # save the reward_record through [[ pickle ]]
+        file = open("reward_record.pickle","wb")
+        pickle.dump(record,file)
+        file.close()
     
       #pickle_off = open("Emp.pickle","rb")
       #emp = pickle.load(pickle_off)
